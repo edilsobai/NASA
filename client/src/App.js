@@ -1,13 +1,20 @@
-import { BrowserRouter as Router,} from "react-router-dom";
-import { Arwes, SoundsProvider, ThemeProvider, createSounds, createTheme,} from "arwes";
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
+import {
+  Arwes,
+  SoundsProvider,
+  ThemeProvider,
+  createSounds,
+  createTheme,
+} from "arwes";
 
 import AppLayout from "./pages/AppLayout";
 
 import { theme, resources, sounds } from "./settings";
 
 const App = () => {
-  return (
-  <ThemeProvider theme={createTheme(theme)}>
+  return <ThemeProvider theme={createTheme(theme)}>
     <SoundsProvider sounds={createSounds(sounds)}>
       <Arwes animate background={resources.background.large} pattern={resources.pattern}>
         {anim => (
@@ -17,8 +24,7 @@ const App = () => {
         )}
       </Arwes>
     </SoundsProvider>
-  </ThemeProvider>
-  );
+  </ThemeProvider>;
 };
 
 export default App;

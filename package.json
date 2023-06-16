@@ -1,0 +1,27 @@
+{
+  "name": "nasa",
+  "version": "1.0.0",
+  "description": "This is a full-stack project developed  for scheduling a mission launch for interstellar travel to one of the Kepler Exoplanets. The project combines a front-end application built with React and Arwes UI framework, and a back-end built with Node.js, Express, and MongoDB.",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install-all": "npm run install-server && npm run install-client",
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix client",
+    "dev": "start /B npm run server & start /B npm run client",
+    "deploy": "npm run build --prefix client && npm run dev --prefix server",
+    "test": "npm run test --prefix server && npm run test --prefiix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edilsobai/NASA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edilsobai/NASA/issues"
+  },
+  "homepage": "https://github.com/edilsobai/NASA#readme"
+}

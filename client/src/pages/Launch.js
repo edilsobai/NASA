@@ -2,17 +2,16 @@ import { useMemo } from "react";
 import { Appear, Button, Loading, Paragraph } from "arwes";
 import Clickable from "../components/Clickable";
 
-const Launch = ({entered, planets, submitLaunch, isPendingLaunch}) => {
+const Launch = props => {
   const selectorBody = useMemo(() => {
-    return planets?.map(planet => 
+    return props.planets?.map(planet => 
       <option value={planet.keplerName} key={planet.keplerName}>{planet.keplerName}</option>
     );
-  }, [planets]);
+  }, [props.planets]);
 
   const today = new Date().toISOString().split("T")[0];
 
-  return (
-  <Appear id="launch" animate show={entered}>
+  return <Appear id="launch" animate show={props.entered}>
     <Paragraph>Schedule a mission launch for interstellar travel to one of the Kepler Exoplanets.</Paragraph>
     <Paragraph>Only confirmed planets matching the following criteria are available for the earliest scheduled missions:</Paragraph>
     <ul>
@@ -20,7 +19,7 @@ const Launch = ({entered, planets, submitLaunch, isPendingLaunch}) => {
       <li>Effective stellar flux &gt; 0.36 times Earth's value and &lt; 1.11 times Earth's value</li>
     </ul>
 
-    <form onSubmit={submitLaunch} style={{display: "inline-grid", gridTemplateColumns: "auto auto", gridGap: "10px 20px"}}>
+    <form onSubmit={props.submitLaunch} style={{display: "inline-grid", gridTemplateColumns: "auto auto", gridGap: "10px 20px"}}>
       <label htmlFor="launch-day">Launch Date</label>
       <input type="date" id="launch-day" name="launch-day" min={today} max="2040-12-31" defaultValue={today} />
       <label htmlFor="mission-name">Mission Name</label>
@@ -33,19 +32,18 @@ const Launch = ({entered, planets, submitLaunch, isPendingLaunch}) => {
       </select>
       <Clickable>
         <Button animate 
-          show={entered} 
+          show={props.entered} 
           type="submit" 
           layer="success" 
-          disabled={isPendingLaunch}>
+          disabled={props.isPendingLaunch}>
           Launch Mission ✔
         </Button>
       </Clickable>
-      {isPendingLaunch &&
+      {props.isPendingLaunch &&
         <Loading animate small />
       }
     </form>
-  </Appear> 
-  );
+  </Appear>
 };
 
 export default Launch;
