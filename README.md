@@ -42,6 +42,6 @@ This command will run tests for both the server and client applications, allowin
 The project repository is hosted on GitHub. You can access it at: https://github.com/edilsobai/NASA.git
 
 
-License
+## License
 This project is licensed under the ISC License. Please see the LICENSE file for more details.
 
