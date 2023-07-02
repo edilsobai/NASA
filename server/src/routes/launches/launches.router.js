@@ -1,9 +1,15 @@
 const exprses = require("express")
 
-const { httpGetAllLaunches} = require("./launches.controller")
+const { 
+    httpGetAllLaunches,
+    httpAddNewLaunch,
+    httpDeleteLaunchById
+} = require("./launches.controller")
 
 const launchesRouter = exprses.Router()
 
-launchesRouter.get("/launches", httpGetAllLaunches )
+launchesRouter.get("/", httpGetAllLaunches)
+launchesRouter.post("/", httpAddNewLaunch)
+launchesRouter.delete("/:id", httpDeleteLaunchById)
 
 module.exports = launchesRouter

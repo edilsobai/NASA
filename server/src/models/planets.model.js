@@ -5,13 +5,12 @@ const path = require("node:path");
 
 const habitablePlanets = [];
 
-function isHabitable(planet) {
-  return (
-    planet["koi_disposition"] === "CONFIRMED" &&
+function isHabitablePlanet(planet) {
+  return planet["koi_disposition"] === "CONFIRMED" &&
     planet["koi_insol"] > 0.36 &&
     planet["koi_insol"] < 1.11 &&
     planet["koi_prad"] < 1.6
-  );
+  
 }
 
 // const promise = new Promise((resolve, reject) => { resolve(42) })
@@ -31,9 +30,9 @@ function loadPlanetsData() {
            columns: true 
           }))
       .on("data", async (data) => {
-        if (isHabitable(data)) {
+        if (isHabitablePlanet(data)) {
           // console.log(data)
-          return habitablePlanets.push(data);
+          habitablePlanets.push(data);
         }
       })
       .on("error", (error) => {
@@ -41,7 +40,7 @@ function loadPlanetsData() {
         reject(error);
       })
       .on("end", () => {
-        console.log("done");
+        console.log(`${habitablePlanets.length} habitable planets found`);
         resolve();
       });
   });
