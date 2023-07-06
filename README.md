@@ -31,6 +31,10 @@ To deploy the project, you can use the following command:
 
 This command will build the client application and start the server in production mode. It prepares the project for deployment to a production environment.
 
+> npm run deploy-cluster
+
+This command combines the build command for the client application and the cluster command for starting the server in a clustered mode. It prepares the project for deployment to a production environment.
+
 ## Testing
 To run tests for the server and client applications, you can use the following command:
 
