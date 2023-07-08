@@ -11,7 +11,7 @@
     "client": "npm start --prefix client",
     "dev": "start /B npm run server & start /B npm run client",
     "deploy": "npm run build --prefix client && npm run dev --prefix server",
-     "deploy-cluster": "npm run build --prefix client && npm run cluster --prefix server",
+    "deploy-cluster": "npm run build --prefix client && npm run cluster --prefix server",
     "test": "npm run test --prefix server && npm run test --prefiix client"
   },
   "repository": {
@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/edilsobai/NASA/issues"
   },
-  "homepage": "https://github.com/edilsobai/NASA#readme"
+  "homepage": "https://github.com/edilsobai/NASA#readme",
+  "dependencies": {
+    "mongoose": "^7.3.2"
+  }
 }
