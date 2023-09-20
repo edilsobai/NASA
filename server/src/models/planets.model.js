@@ -1,11 +1,15 @@
+//DEPENDENCIES
 const { parse } = require("csv-parse");
 const fs = require("node:fs");
 const path = require("node:path");
 
+//planets SCHEMA
 const planets = require("./planets.mongo") 
 
+//kepler planets
 const habitablePlanets = [];
 
+// FUNCTION for finding habitable planets
 function isHabitablePlanet(planet) {
   return planet["koi_disposition"] === "CONFIRMED" &&
     planet["koi_insol"] > 0.36 &&
@@ -14,12 +18,7 @@ function isHabitablePlanet(planet) {
   
 }
 
-// const promise = new Promise((resolve, reject) => { resolve(42) })
-// promise.then((res) => {
-//
-// })
-//  await result = await promise;
-
+// FUNCTION for reading data and  saving planets in a database(mongoDB) 
 function loadPlanetsData() {
   return new Promise((resolve, reject) => {
     fs.createReadStream(
@@ -48,11 +47,14 @@ function loadPlanetsData() {
   });
 }
 
-
+//FUNCTION for getting the names of all planets from the database
 async function getAllPlanets(){
-    return await planets.find({})
+    return await planets.find({},{
+      "_id": 0,
+      "__v": 0 })
 }
 
+//FUNCTION for saving planets in a database 
 async function savePlanet(planet){
     try{
         await planets.updateOne({

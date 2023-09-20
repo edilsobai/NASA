@@ -1,12 +1,15 @@
-const launches = new Map()
+const launchesDatabase = require("./launches.mongo")
+const planets = require("./planets.mongo")
 
-let latestFLightNumber = 100
+const DEFAULT_FLIGHT_NUMBER = 100
 
-function existsLaunchWithId(id) {
-    return launches.has(id)
+async function existsLaunchWithId(launchId) {
+    return await launchesDatabase.findOne({
+        flightNumber:launchId
+    }) 
 }
 
-const launch = {
+const defaultLaunch = {
     flightNumber: 100,
     mission: "Kepler Exploration X",
     rocket: "Explore IS1",
@@ -18,33 +21,64 @@ const launch = {
 
     
 }
-launches.set(launch.flightNumber, launch)
 
-function getAllLaunches() {
-    return Array.from(launches.values())
+async function getLatestFlightNum(){
+    const latestLaunch = await launchesDatabase
+    .findOne()
+    .sort("-flightNumber")
+
+    if(!latestLaunch){
+        return DEFAULT_FLIGHT_NUMBER
+    }
+
+    return latestLaunch.flightNumber
 }
 
-function addNewLaunch(launch) {
-    latestFLightNumber++
-    launches.set(
-        latestFLightNumber, 
-        Object.assign(launch, {
-            flightNumber: latestFLightNumber,
-            customers: ["Edu", "Nasa"],
-            succes: true,
-            upcoming: true,
+async function getAllLaunches() {
+    return await launchesDatabase.find({}, {"_id": 0,"__v": 0})
+}
 
+async function addNewLaunch(launch) {
+   const newFlightNumber = await getLatestFlightNum() + 1;
+    const newLaunch = Object.assign(launch, {
+        succes: true,
+        upcoming: true,
+        customers: ["Edu", "Nasa"],
+        flightNumber: newFlightNumber,
         }
         )
-    )
+        
+    await saveLaunch(newLaunch)
 }
 
-function deleteLaunchById(launchId){
-    const deleted = launches.get(launchId)
-    deleted.upcoming = false
-    deleted.succes = false
-    return deleted
+async function deleteLaunchById(launchId){
+    const deleted = await launchesDatabase.updateOne({
+        flightNumber:launchId
+    },{
+        upcoming: false,
+        succes: false
+    })
+    console.log(deleted)
+    return deleted.acknowledged === true && deleted.modifiedCount === 1 
 }
+
+async function saveLaunch(launch){
+    const planet = planets.findOne({
+        keplerName: launch.keplerName
+    }) 
+    if(!planet){
+        throw new Error("No matching planet found")
+    }
+    await launchesDatabase.findOneAndUpdate({
+        flightNumber: launch.flightNumber
+    }, 
+        launch,
+    {
+        upsert: true
+    })
+}
+
+saveLaunch(defaultLaunch)
 
 module.exports = {
     existsLaunchWithId,
