@@ -63,8 +63,8 @@ async function deleteLaunchById(launchId){
 }
 
 async function saveLaunch(launch){
-    const planet = planets.findOne({
-        keplerName: launch.keplerName
+    const planet = await planets.findOne({
+        keplerName: launch.target
     }) 
     if(!planet){
         throw new Error("No matching planet found")
