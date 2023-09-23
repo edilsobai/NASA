@@ -1,7 +1,37 @@
+//DEPENDENCIES
+const axios = require("axios")
+
+//COLLECTIONS in mongoDB
 const launchesDatabase = require("./launches.mongo")
 const planets = require("./planets.mongo")
 
 const DEFAULT_FLIGHT_NUMBER = 100
+
+const SPACE_X_URL = "https://api.spacexdata.com/v4/launches/query" 
+
+async function loadLaunchesData() {
+    const response = await axios.post(SPACE_X_URL, {    
+        query: {},
+        options: {
+            populate:[
+                {
+                    path: "rocket",
+                    select: {
+                        name: 1
+                    } 
+                },
+                {
+                    path: "payloads",
+                    select: {
+                        customers: 1
+                    }
+                }
+            ]
+        
+    }
+        })
+}
+
 
 async function existsLaunchWithId(launchId) {
     return await launchesDatabase.findOne({
@@ -10,14 +40,14 @@ async function existsLaunchWithId(launchId) {
 }
 
 const defaultLaunch = {
-    flightNumber: 100,
+    flightNumber: 100, // flight_number 
     mission: "Kepler Exploration X",
-    rocket: "Explore IS1",
-    launchDate: new Date("December 27, 2030"),
-    target: "Kepler-442 b",
+    rocket: "Explore IS1", // rocket.name
+    launchDate: new Date("December 27, 2030"), //date_local
+    target: "Kepler-442 b", // name
     customers: ["Edu", "Nasa"],
-    upcoming: true,
-    succes: true
+    upcoming: true, // upcomming
+    succes: true //succes
 
     
 }
