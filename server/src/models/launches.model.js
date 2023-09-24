@@ -9,19 +9,6 @@ const DEFAULT_FLIGHT_NUMBER = 100
 
 const SPACE_X_URL = "https://api.spacexdata.com/v4/launches/query" 
 
-const defaultLaunch = {
-    flightNumber: 100, // flight_number 
-    mission: "Kepler Exploration X", //name
-    rocket: "Explore IS1", // rocket.name
-    launchDate: new Date("December 27, 2030"), //date_local
-    target: "Kepler-442 b", // not applicable
-    customers: ["Edu", "Nasa"], //payload.costomers for each payload
-    upcoming: true, // upcomming
-    succes: true //succes
-
-    
-}
-
 
 async function populateLaunches(){
     const response = await axios.post(SPACE_X_URL, {    
@@ -109,6 +96,9 @@ async function getLatestFlightNum(){
 
 async function getAllLaunches(skip,limit) {
     return await launchesDatabase.find({}, {"_id": 0,"__v": 0})
+    .sort({
+        flightNumber: 1
+    })
     .skip(skip)
     .limit(limit)
 }
@@ -155,7 +145,6 @@ async function deleteLaunchById(launchId){
 
 
 
-saveLaunch(defaultLaunch)
 
 module.exports = {
     loadLaunchData,
