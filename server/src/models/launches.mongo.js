@@ -5,7 +5,7 @@ const launchesSchema = new Schema({
     mission: {type: String, required: true},
     rocket: {type: String, required: true},
     launchDate: {type: Date},
-    target: { type: String, required: true },
+    target: { type: String},
     customers:{ type: [ String ], required: true } ,
     upcoming: { type: Boolean, require: true, default: true} ,
     succes: { type: Boolean, require: true, default: true}
