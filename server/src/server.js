@@ -1,6 +1,8 @@
 //DEPENDENCIES
 const http = require("node:http");
 
+require("dotenv").config()
+
 //Express application
 const app = require("./app");
 
