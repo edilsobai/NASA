@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js version 18.18.0
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v1
         with:
-          node-version: "18.18.0"
+          node-version: '18.x'
       - run: npm install
       - run: npm run build --prefix client
