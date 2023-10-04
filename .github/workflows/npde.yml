@@ -1,9 +1,10 @@
 name: NASA CI 
-
 on: 
   push: 
-    branches: [ main ]
-  pull-request: [ main ]
+    branches: [main]
+  pull-request:
+    branches: [main] 
+
 
 jobs: 
   build: 
@@ -15,5 +16,5 @@ jobs:
         with:
           node-version: "18.18.0"
       - run: npm install
-      - run npm run build --prefix client
+      - run: npm run build --prefix client
     
