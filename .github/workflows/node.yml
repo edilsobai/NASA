@@ -8,13 +8,19 @@ on:
 
 jobs:
   build:
+    env:
+      CI: true
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 14, 16, 18 ]
+    name: Node ${{ matrix.node }} sample    
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js version 16
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Use Node.js version {{matrix.node-version}}
+        uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: {{ matrix.node-version }}
       - name: Install
         working-directory: client
         run: npm install
@@ -22,3 +28,6 @@ jobs:
       - name: Build
         working-directory: client
         run: npm run build
+      
+      - name: Test
+        run: npm run test 
