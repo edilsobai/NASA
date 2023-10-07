@@ -10,7 +10,7 @@
     "server": "npm run dev --prefix server",
     "client": "npm start --prefix client",
     "dev": "start /B npm run server & start /B npm run client",
-    "deploy": "set BUILD_PATH=../server/public && npm run build --prefix client && npm start --prefix server",
+    "deploy": "BUILD_PATH=../server/public && npm run build --prefix client && npm start --prefix server",
     "deploy-cluster": "npm run build --prefix client && npm run cluster --prefix server",
     "test": "npm run test --prefix server && npm run test --prefiix client"
   },
