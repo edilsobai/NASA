@@ -61,7 +61,6 @@ async function savePlanet(planet){
           }, {
             upsert: true
           });
-          await planets.save
     }
     catch(err){
         console.log(`Could not save planets ${err}`)
