@@ -13,14 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 14.x, 16.x, 18.x ]
-    name: Node ${{ matrix.node }} sample    
+        node-version: [14.x, 16.x, 18.x]
+    name: Node ${{ matrix.node-version }} sample
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js version {{matrix.node-version}}
+      - name: Use Node.js version ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: {{ matrix.node-version }}
+          node-version: ${{ matrix.node-version }}
       - name: Install
         working-directory: client
         run: npm install
@@ -30,4 +30,4 @@ jobs:
         run: npm run build
       
       - name: Test
-        run: npm run test 
+        run: npm run test
