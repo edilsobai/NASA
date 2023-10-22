@@ -1,7 +1,7 @@
 //DEPENDENCIES
 const { parse } = require("csv-parse");
-const fs = require("node:fs");
-const path = require("node:path");
+const fs = require("fs");
+const path = require("path");
 
 //planets SCHEMA
 const planets = require("./planets.mongo") 
